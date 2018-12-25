@@ -28,60 +28,15 @@ while (check == 0) %определяем границы
 end
 check = 0;
 
-a1 = a;
-b1 = b;
-while (check == 0) %определяем корень с точностью eps просто делением
-    root = (a1+b1)/2;  
-    fa = eval(f(a));
-    fc = eval(f(root));
-    
-    if ((b1-a1)<eps)
-        check = 1;
-    else
-        if(fa*fc < 0)
-            b1 = root;
-        else
-            a1 = root;
-        end
-    end
-    k = k+1;
-end
-k
-root
-k = 0;
-check = 0;
-
-
-%метод хорд
 if (eval(ftt(a))*eval(f(a)) < 0) %a-неподвижный конец отрезка, b-конец с которого мы приближаемся
+                                 %a-fixed end of the segment, b-the end from which we are approaching                       
     c = a;
     a = b;
     b = c;
 end
 
-b1 = b;
-b2 = b1-(a-b1)/(eval(f(a))-eval(f(b1)))*eval(f(b1))
-while (check == 0)
-    if (abs(b1-b2) < eps)
-        check = 1;
-    else
-        eval(f(a));
-        eval(f(b1));
-        b1 = b2;
-        b2 = b1-(a-b1)/(eval(f(a))-eval(f(b1)))*eval(f(b1));
-    end
-    k = k+1;
-    if (k == 100)
-        check = 1;
-        fprintf('Слишком много шагов');
-    end
-end
-b2 %корень
-k
-k = 0;
-
 %метод хорд и касательных
-
+%method of chords and tangents
 a1 = a;
 b1 = b;
 fa1 = eval(f(a1));
@@ -94,27 +49,29 @@ while(abs(a1-b1) > eps)
    a1 = a2;
    k = k + 1;
 end
-k %шаги
+k %шаги/steps
 k = 0;
-a1 %корень
+a1 %корень/root
 b1
 
-a1 = a; %метод хорд и касательных(чуть другой) http://cyclowiki.org/wiki/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4
+a1 = a; %метод хорд и касательных(чуть другой)/method of chords and tangents (slightly different) http://cyclowiki.org/wiki/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4
 b1 = b;
 while(abs(a1-b1) > eps)
    if(eval(f(a1))*eval(ft(a1)) < 0)
         a1 = a1 - eval(f(a1))*(a1-b1)/(eval(f(a1))-eval(f(b1)));
    else
-        a1 = eval(f(a1))/eval(ft(a1))
+        a1 = eval(f(a1))/eval(ft(a1));
    end
    
    if(eval(f(b1))*eval(ft(b1)) < 0)
         b1 = b1 - eval(f(b1))*(b1-a1)/(eval(f(b1))-eval(f(a1)));
    else
-        b1 = eval(f(b1))/eval(ft(b1))
+        b1 = eval(f(b1))/eval(ft(b1));
    end
-   k = k + 1;
+   k = k +1;
 end
 k
-x = (a1+b1)/2 %корень
-
+root = (a1+b1)/2 %корень
+x = 0 : 0.01 : 2;
+y = eval(f(x));
+plot( x , y )
