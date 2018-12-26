@@ -1,5 +1,6 @@
+https://yadi.sk/i/JJm2NAc35kM7MA
 %lg(3x-1)+exp(2x-1)=0
-%Локализуем наименьший корень
+%Г‹Г®ГЄГ Г«ГЁГ§ГіГҐГ¬ Г­Г ГЁГ¬ГҐГ­ГјГёГЁГ© ГЄГ®Г°ГҐГ­Гј
 %exp(-x)-1/2*sinx^2
 clc
 eps = 0.0001;
@@ -11,9 +12,9 @@ f(t) = exp(-1*t)-1/2*sin(t)*sin(t)
 %f(t) = log(3*t-1)+exp(2*t-1);
 ftt(t)= diff(f(t),2);
 ft(t)= diff(f(t),1);
-k = 0; %счётчик шагов
+k = 0; %Г±Г·ВёГІГ·ГЁГЄ ГёГ ГЈГ®Гў
 
-while (check == 0) %определяем границы
+while (check == 0) %Г®ГЇГ°ГҐГ¤ГҐГ«ГїГҐГ¬ ГЈГ°Г Г­ГЁГ¶Г»
     fa = eval(f(a));
     fb = eval(f(b));
     if (fa*fb < 0) 
@@ -28,14 +29,14 @@ while (check == 0) %определяем границы
 end
 check = 0;
 
-if (eval(ftt(a))*eval(f(a)) < 0) %a-неподвижный конец отрезка, b-конец с которого мы приближаемся
+if (eval(ftt(a))*eval(f(a)) < 0) %a-Г­ГҐГЇГ®Г¤ГўГЁГ¦Г­Г»Г© ГЄГ®Г­ГҐГ¶ Г®ГІГ°ГҐГ§ГЄГ , b-ГЄГ®Г­ГҐГ¶ Г± ГЄГ®ГІГ®Г°Г®ГЈГ® Г¬Г» ГЇГ°ГЁГЎГ«ГЁГ¦Г ГҐГ¬Г±Гї
                                  %a-fixed end of the segment, b-the end from which we are approaching                       
     c = a;
     a = b;
     b = c;
 end
 
-%метод хорд и касательных
+%Г¬ГҐГІГ®Г¤ ГµГ®Г°Г¤ ГЁ ГЄГ Г±Г ГІГҐГ«ГјГ­Г»Гµ
 %method of chords and tangents
 a1 = a;
 b1 = b;
@@ -49,12 +50,12 @@ while(abs(a1-b1) > eps)
    a1 = a2;
    k = k + 1;
 end
-k %шаги/steps
+k %ГёГ ГЈГЁ/steps
 k = 0;
-a1 %корень/root
+a1 %ГЄГ®Г°ГҐГ­Гј/root
 b1
 
-a1 = a; %метод хорд и касательных(чуть другой)/method of chords and tangents (slightly different) http://cyclowiki.org/wiki/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4
+a1 = a; %Г¬ГҐГІГ®Г¤ ГµГ®Г°Г¤ ГЁ ГЄГ Г±Г ГІГҐГ«ГјГ­Г»Гµ(Г·ГіГІГј Г¤Г°ГіГЈГ®Г©)/method of chords and tangents (slightly different) http://cyclowiki.org/wiki/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4
 b1 = b;
 while(abs(a1-b1) > eps)
    if(eval(f(a1))*eval(ft(a1)) < 0)
@@ -71,7 +72,7 @@ while(abs(a1-b1) > eps)
    k = k +1;
 end
 k
-root = (a1+b1)/2 %корень
+root = (a1+b1)/2 %ГЄГ®Г°ГҐГ­Гј
 x = 0 : 0.01 : 2;
 y = eval(f(x));
 plot( x , y )
