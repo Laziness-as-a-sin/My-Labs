@@ -3,7 +3,9 @@
 #include <string>
 #include <cstdlib>
 #include <set>
-#include <math.h>
+#include <cmath>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -11,6 +13,7 @@ struct Point{
     double x;
     double y;
     double angle = 0;
+    double dist = 0;
 };
 
 double angle(double x1, double y1, double x2, double y2, double x0, double y0){// угол между векторами p0p1 и p0p2
@@ -28,38 +31,27 @@ double angle(double x1, double y1, double x2, double y2, double x0, double y0){/
         return 3.14/2;
 }
 
-void quickSort(Point arr[], int left, int right) {
-
-      int i = left, j = right;
-      Point tmp;
-      Point pivot = arr[(left + right) / 2];
-
-      while (i <= j) {
-            while (arr[i].angle < pivot.angle)
-                  i++;
-            while (arr[j].angle > pivot.angle)
-                  j--;
-            if (i <= j) {
-                  tmp = arr[i];
-                  arr[i] = arr[j];
-                  arr[j] = tmp;
-                  i++;
-                  j--;
-            }
-      };
-
-      if (left < j)
-            quickSort(arr, left, j);
-
-      if (i < right)
-            quickSort(arr, i, right);
-
+bool f(const Point &a, const Point &b){
+    if(a.angle < b.angle) return true;
+    if(a.angle == b.angle)
+        if(a.dist < b.dist) return true;
+    return false;
 }
+
+bool check(Point p0, Point p1, Point p2){// поворот чекаем
+    double ax = p1.x - p0.x;
+    double bx = p2.x - p0.x;
+    double ay = p1.y - p0.y;
+    double by = p2.y - p0.y;
+    if(ax*by - ay*bx >= 0) return true;// вектор направлен влево
+    return false;
+};
 
 int main() {
 
-    ifstream input("E:/Baranov/A/input.txt");
-    ofstream output("E:/Baranov/A/output.txt");
+    ifstream input("D:/Baranov/A/input.txt");
+    ofstream output("D:/Baranov/A/output.txt");
+
 
     int N, minI = -1;
     Point startP;
@@ -82,31 +74,18 @@ int main() {
                     minI = i;
                 }
     }
-    for(int i = 0; i < N; i++)// находим полярный угол
+    for(int i = 0; i < N; i++){// находим полярный угол
         Arr[i].angle = angle(startP.x+10, startP.y, Arr[i].x, Arr[i].y, startP.x, startP.y);
+        Arr[i].dist = sqrt((Arr[i].x-startP.x)*(Arr[i].x-startP.x)+(Arr[i].y-startP.y)*(Arr[i].y-startP.y));
+    }
 
     Arr[minI].angle = 3.15;
 
+    sort(Arr, Arr + N, f);
 
-    for(int i = 0; i < N; i++){
-        cout << i << ' ';
-        cout << Arr[i].x << ' ';
-        cout << Arr[i].y << ' ';
-        cout << Arr[i].angle << endl;
-    }
-    quickSort(Arr, 0, N-1);
+
     output << fixed;
     output.precision(5);
-
-    cout << angle(1, 1, 2, 2, 0, 0) << endl;
-    for(int i = 0; i < N; i++){
-        cout << i << ' ';
-        cout << Arr[i].x << ' ';
-        cout << Arr[i].y << ' ';
-        cout << Arr[i].angle << endl;
-    }
-
-
 
     input.close();
     output.close();
